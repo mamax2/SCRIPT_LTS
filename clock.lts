@@ -1,0 +1,41 @@
+//caso CLOCK con errore personalizzato e stop
+/*CLOCK = IDLE,
+IDLE =(start -> TICKING
+	| start -> MY_ERROR
+	| stop -> STOP),
+TICKING = (tick -> TICKING
+	| end -> END
+	| stop -> IDLE),
+MY_ERROR =(output_error_msg -> ERROR).*/
+
+//caso CLOCK con BUFFER
+CLOCK = TICKING[0],
+TICKING[t:0..9] = 
+	(when (t<9) tick -> TICKING[t+1]
+	| when (t==9) tick -> TICKING[0]).
+
+//caso con end alla fine
+CLOCK = TICKING[0],
+TICKING[t:0..9] = 
+	(when (t<9) tick -> TICKING[t+1]
+	| when (t==9) tick -> END).
+
+//caso in cui definisco tutto prima
+const MAX_TICKING = 10
+range TICK_RANGE = 0..MAX_TICKING
+
+CLOCK = TICKING[0],
+TICKING[TICK_RANGE] = 
+	(when (t<MAX_TICKING) tick -> TICKING[t+1]
+	| when (t==MAX_TICKING) tick -> TICKING[0]).
+
+
+//caso del decremento e incremento
+
+const MAX_TICKING = 10
+range TICK_RANGE = 0..MAX_TICKING
+
+CLOCK = TICKING[0],
+TICKING[TICK_RANGE] = 
+	(when (t<MAX_TICKING) tick -> TICKING[t+1]
+	| when (t==MAX_TICKING) tick -> TICKING[t-1]).

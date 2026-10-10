@@ -1,0 +1,4 @@
+range PROGRESS_BAR = 1..10
+
+COFFEE_MACHINE=(coffee -> COFFEE_MACHINE
+				| tea -> COFFEE_MACHINE).
